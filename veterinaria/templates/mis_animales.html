@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Mis Animales</h2>
+
+{% if animales %}
+<div class="row">
+    {% for animal in animales %}
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ animal.nombre }}</h5>
+                <p><strong>Especie:</strong> {{ animal.especie }}</p>
+                <p><strong>Fecha de nacimiento:</strong> {{ animal.fecha_nacimiento }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No tienes animales registrados</p>
+{% endif %}
+
+{% endblock %}

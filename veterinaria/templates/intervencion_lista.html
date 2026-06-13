@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load bootstrap_icons %}
+
+{% block content %}
+<h2>Lista de Intervenciones</h2>
+
+{% if intervenciones %}
+<div class="row">
+    {% for intervencion in intervenciones %}
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ intervencion.nombre }}</h5>
+                <p class="card-text">{{ intervencion.descripcion }}</p>
+                <p><strong>Tratamiento:</strong> {{ intervencion.tratamiento }}</p>
+                <p><strong>Nivel de riesgo:</strong> {{ intervencion.nivel_riesgo }}</p>
+                <p><strong>Fecha programada:</strong> {{ intervencion.fecha_programada }}</p>
+                <p><strong>Fecha fin recuperación:</strong> {{ intervencion.fecha_fin_recuperacion }}</p>
+                <p><strong>Completada:</strong> {{ intervencion.completada }}</p>
+                <p><strong>Veterinario:</strong> {{ intervencion.veterinario_responsable }}</p>
+                <p><strong>Animales:</strong>
+                    <ul>
+                        {% for animal in intervencion.animales.all %}
+                        <li>{{ animal.nombre }}</li>
+                        {% endfor %}
+                    </ul>
+                </p>
+
+                {% if user.groups.all.0.name == 'Veterinarios' %}
+                    {% if intervencion.veterinario_responsable == user %}
+                    <a href="{% url 'intervencion_editar' intervencion.id %}" 
+                       class="btn btn-warning btn-sm">
+                        {% bs_icon 'pencil' %}
+                    </a>
+                    <form action="{% url 'intervencion_eliminar' intervencion.id %}" 
+                          method="post" 
+                          class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" 
+                                class="btn btn-danger btn-sm"
+                                onclick="return confirm('¿Estás seguro de que quieres eliminar esta intervención?')">
+                            {% bs_icon 'trash' %}
+                        </button>
+                    </form>
+                    {% endif %}
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No hay intervenciones disponibles</p>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% load django_bootstrap5 %}
+{% load bootstrap_icons %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión Veterinaria</title>
+    {% bootstrap_css %}
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'index' %}">Gestión Veterinaria</a>
+        <div class="navbar-nav ms-auto">
+
+            {% if user.is_authenticated %}
+                {% if user.groups.all.0.name == 'Veterinarios' %}
+                    <a class="nav-link" href="{% url 'intervencion_crear' %}">Crear Intervención</a>
+                    <a class="nav-link" href="{% url 'intervencion_lista' %}">Listar Todas</a>
+                    <a class="nav-link" href="{% url 'intervencion_buscar' %}">Búsqueda</a>
+                {% elif user.groups.all.0.name == 'Dueños' %}
+                    <a class="nav-link" href="{% url 'mis_animales' %}">Mis Animales</a>
+                    <a class="nav-link" href="{% url 'intervencion_buscar' %}">Búsqueda</a>
+                {% endif %}
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+                <a class="nav-link" href="{% url 'registro_veterinario' %}">Registro Veterinario</a>
+                <a class="nav-link" href="{% url 'registro_dueno' %}">Registro Dueño</a>
+            {% endif %}
+
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    {% bootstrap_messages %}
+    {% block content %}
+    {% endblock %}
+</div>
+
+<footer class="bg-dark text-white text-center py-3 mt-5">
+    <p>Gestión Veterinaria 2025</p>
+</footer>
+
+{% bootstrap_javascript %}
+</body>
+</html>

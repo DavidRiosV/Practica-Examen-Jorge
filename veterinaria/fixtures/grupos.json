@@ -1,0 +1,26 @@
+[
+  {
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+      "name": "Veterinarios",
+      "permissions": [
+        ["add_intervencion", "veterinaria", "intervencion"],
+        ["change_intervencion", "veterinaria", "intervencion"],
+        ["delete_intervencion", "veterinaria", "intervencion"],
+        ["view_intervencion", "veterinaria", "intervencion"]
+      ]
+    }
+  },
+  {
+    "model": "auth.group",
+    "pk": 2,
+    "fields": {
+      "name": "Dueños",
+      "permissions": [
+        ["view_intervencion", "veterinaria", "intervencion"],
+        ["view_animal", "veterinaria", "animal"]
+      ]
+    }
+  }
+]

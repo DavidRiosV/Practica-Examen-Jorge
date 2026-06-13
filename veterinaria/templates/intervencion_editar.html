@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2>Editar Intervención: {{ intervencion.nombre }}</h2>
+        <form action="{% url 'intervencion_editar' intervencion.id %}" method="post">
+            {% csrf_token %}
+            {% bootstrap_form formulario %}
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="{% url 'intervencion_lista' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
